@@ -19,7 +19,7 @@ function Square({value, onSquareClick}){
  * @returns The game board for the tic-tac-toe game
  */
 function Board({xIsNext, squares, onPlay}) {
-  
+
   function handleClick(i){
 
     //end the function without changing any variables
@@ -36,8 +36,8 @@ function Board({xIsNext, squares, onPlay}) {
     }else{
       nextSquares[i]="O";
     }
-    setSquares(nextSquares);
-    setXIsNext(!xIsNext);
+
+    onPlay(nextSquares);
   }
 
   //prompts the game status
@@ -110,8 +110,27 @@ export default function Game(){
   const currentSquares= history[history.length-1];
 
   function handlePlay(nextSquares){
+    setHistory([...history, nextSquares]);
+    setXIsNext(!xIsNext);
+  }
+
+  function jumpTo(nextMove){
     //TODO
   }
+  const moves= history.map((squares, move)=>{
+    
+    let description;
+    if (move > 0){
+      description= 'Go to move #' + move;
+    }else{
+      description= 'Go to game start';
+    }
+    return(
+      <li>
+        <button onClick={() => jumpTo(move)}>{description}</button>
+      </li>
+    );
+  });
 
   return(
     <div className="game">
