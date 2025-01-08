@@ -15,13 +15,11 @@ function Square({value, onSquareClick}){
 }
 
 /**
- * Component that encapsulates the operation of the tic-tac-toe board game
+ * Component that encapsulates the operation of the tic-tac-toe board game including making moves, validating victory, and showing game state
  * @returns The game board for the tic-tac-toe game
  */
-export default function Board() {
-  const [xIsNext, setXIsNext]= useState(true);
-  const [squares, setSquares]= useState(Array(9).fill(null));
-
+function Board({xIsNext, squares, onPlay}) {
+  
   function handleClick(i){
 
     //end the function without changing any variables
@@ -100,4 +98,29 @@ function calculateWinner(squares){
       return true;
   }
   return false;
+}
+
+/**
+ * Component containing redo feature
+ * @returns rendering of the tic-tac-toe board game
+ */
+export default function Game(){
+  const [xIsNext, setXIsNext]=useState(true);
+  const [history, setHistory]=useState([Array(9).fill(null)]);
+  const currentSquares= history[history.length-1];
+
+  function handlePlay(nextSquares){
+    //TODO
+  }
+
+  return(
+    <div className="game">
+      <div className="game-board">
+        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+      </div>
+      <div className="game-info">
+        <ol>{/*TODO*/}</ol>
+      </div>
+    </div>
+  );
 }
