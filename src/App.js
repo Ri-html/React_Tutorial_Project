@@ -128,6 +128,17 @@ export default function Game(){
     }else{
       description= 'Go to game start';
     }
+
+    let isCurrentMove = move === currentMove;
+    if(isCurrentMove){
+      return (
+        <li key={move} >
+        <p>{description}</p>
+      </li>
+      )
+    }
+
+
     return(
       <li key={move} >
         <button onClick={() => jumpTo(move)}>{description}</button>
