@@ -3,7 +3,7 @@ import { useState } from "react";
 /**
  * rectangular cells representing cells on a game board (not specific to tic-tac-toe)
  * @param {char} value - values representing an entity on the game board
- * @param {function} onSquareClick - a function taken from the parent class that does an action on clicking the cell 
+ * @param {function(): void} onSquareClick - a function taken from the parent class that does an action on clicking the cell 
  * @returns a button representing the board game cell
  */
 function Square({value, onSquareClick}){
@@ -16,7 +16,7 @@ function Square({value, onSquareClick}){
 
 /**
  * Component that encapsulates the operation of the tic-tac-toe board game
- * @returns 
+ * @returns The game board for the tic-tac-toe game
  */
 export default function Board() {
   const [xIsNext, setXIsNext]= useState(true);
@@ -42,8 +42,18 @@ export default function Board() {
     setXIsNext(!xIsNext);
   }
 
+  //prompts the game status
+  const winner=calculateWinner(squares);
+  let status;
+  if(winner){
+    status = "Winner: " + winner;
+  }else{
+    status = "Next player: " + (xIsNext?"X":"O");
+  }
+
   //contains the tic tac toe game board with value from the array
   return <>
+  <div className="status">{status}</div>
   <div className="board-row">
     <Square value={squares[0]} onSquareClick={()=>handleClick(0)}/>
     <Square value={squares[1]} onSquareClick={()=>handleClick(1)}/>
