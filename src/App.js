@@ -129,6 +129,7 @@ export default function Game(){
       description= 'Go to game start';
     }
 
+    //returns a string instead of a button if current move equals move
     let isCurrentMove = move === currentMove;
     if(isCurrentMove){
       return (
