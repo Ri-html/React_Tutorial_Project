@@ -119,6 +119,21 @@ export default function Game(){
     setCurrentMove(nextMove);
   }
 
+  function rearrangeHistory(){
+    const nextHistory = [...history.slice(0, currentMove+1)].reverse();
+    setHistory(nextHistory);
+    setCurrentMove(0);
+  }
+
+  function ToggleButton(){
+    return(
+      <button onClick={rearrangeHistory}>Rearrange Move Order</button>
+    )
+  }
+
+  /**
+   * Moves contains an array of html buttons showing history of moves
+   */
   const moves= history.map((squares, move)=>{
     
     let description;
@@ -146,12 +161,14 @@ export default function Game(){
     );
   });
 
+  //return for game component
   return(
     <div className="game">
       <div className="game-board">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div className="game-info">
+        <ToggleButton/>
         <ol>{moves}</ol>
       </div>
     </div>
