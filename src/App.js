@@ -1,5 +1,11 @@
 import { useState } from "react";
 
+/**
+ * rectangular cells representing cells on a game board (not specific to tic-tac-toe)
+ * @param {char} value - values representing an entity on the game board
+ * @param {function} onSquareClick - a function taken from the parent class that does an action on clicking the cell 
+ * @returns a button representing the board game cell
+ */
 function Square({value, onSquareClick}){
   return (
   <button className="square" onClick={onSquareClick}>
@@ -7,16 +13,26 @@ function Square({value, onSquareClick}){
   </button>
   );
 }
+
+/**
+ * Component that encapsulates the operation of the tic-tac-toe board game
+ * @returns 
+ */
 export default function Board() {
   const [xIsNext, setXIsNext]= useState(true);
   const [squares, setSquares]= useState(Array(9).fill(null));
 
   function handleClick(i){
-    if(squares[i]){
+
+    //end the function without changing any variables
+    if(squares[i]||calculateWinner(squares)){
       return;
     }
 
+    //create a deep copy of squares for the sake of undo feature
     const nextSquares = squares.slice();
+    
+    //changes value in nextSquares array and xIsNext variable
     if (xIsNext){
       nextSquares[i]= "X";
     }else{
@@ -26,6 +42,7 @@ export default function Board() {
     setXIsNext(!xIsNext);
   }
 
+  //contains the tic tac toe game board with value from the array
   return <>
   <div className="board-row">
     <Square value={squares[0]} onSquareClick={()=>handleClick(0)}/>
@@ -47,6 +64,11 @@ export default function Board() {
   </>
 }
 
+/**
+ * This is a function to check whether there is a winner to the tic tac toe game
+ * @param {string[]} squares - an array containing the values for the tictactoe board
+ * @returns a boolean value
+ */
 function calculateWinner(squares){
   
   //get an list  of all possible winning patterns
@@ -67,5 +89,5 @@ function calculateWinner(squares){
     if(squares[a] && squares[a]===squares[b] && squares[a]===squares[c])
       return true;
   }
-  return null;
+  return false;
 }
